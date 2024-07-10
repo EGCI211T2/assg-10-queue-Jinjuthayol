@@ -1,63 +1,103 @@
-
 #ifndef queue_h
 #define queue_h
 #include "Node.h"
-#include <cstring>
 class Queue {
-	NodePtr headPtr,tailPtr;
-	int size;
+NodePtr headPtr,tailPtr;
+int size;
 public:
     void enqueue(int);
     int dequeue();
     Queue();
     ~Queue();
+    bool isEmpty();
 };
 
+void Queue::enqueue(int x) {
+    NodePtr new_node = new NODE(x); // Create a new node with value x
 
+    if (new_node) {
+        if (tailPtr == nullptr) {
+            // If queue is empty, new node becomes both head and tail
+            headPtr = new_node;
+            tailPtr = new_node;
+        } else {
+            // Add new node after current tail
+            tailPtr->set_next(new_node);
+            tailPtr = new_node;
+        }
+        size++; // Increase the size of the queue
+    }
+}
+
+
+
+/*
 void Queue::enqueue(int x){
   NodePtr new_node= new NODE(x);
 if(new_node){
-    if(size==0) {
-      headPtr=new_node;
-      tailPtr=headPtr;
+    //Add head and tail for me please
+  1. connect & Change tail
+  2. (may be) change head  when the queue is empty
+  3. increase size
+
+ }
+}*/
+
+
+int Queue::dequeue() {
+    if (headPtr != nullptr) {
+        NodePtr t = headPtr;
+        int value = t->get_value(); // Get the value of the node
+        headPtr = headPtr->get_next(); // Move head to next node
+        delete t; // Delete the node
+        size--; // Decrease the size of the queue
+
+        if (headPtr == nullptr) {
+            tailPtr = nullptr; // If queue is empty, reset tail pointer
+        }
+
+        return value;
     }
-    else{
-        tailPtr->set_next(new_node);
-    }
-        tailPtr=new_node;
-        size++;
-   }
+
+    cout << "Empty queue" << endl;
+    return -1;
 }
 
-int Queue::dequeue(){
+
+
+/*int Queue::dequeue(){
   if(headPtr!=NULL){
      NodePtr t=headPtr;
      int value= t->get_value();
-     headPtr=headPtr->get_next();
-     if(size==1){
-      tailPtr=NULL;
-     }    
-     size--;
+     //Add head and tail for me please
+         
      delete t;
      return value;
-
   }
   cout<<"Empty queue";
   return -1;
-}
+}*/
+
+
 
 
 Queue::Queue(){
     //initialize Queue
-    size=0;
-    headPtr=NULL;
-    tailPtr=NULL;
-    
-}
-Queue::~Queue(){
-  cout<<"clearing queue"<<endl;
-  dequeue();
+    headPtr = nullptr;
+    tailPtr = nullptr;
+    size = 0;
 }
 
+   
+Queue::~Queue(){
+    //delete all remaning Queue (i.e. DQ all)
+    while (headPtr != nullptr) {
+        dequeue(); // Remove all nodes
+    }
+}
+
+bool Queue::isEmpty() {
+    return headPtr == nullptr;
+}
 
 #endif

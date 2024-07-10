@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 #include "Queue.h"
+#include <cstring>
 
 int main(int argc , char **argv) {
   Queue q;
@@ -17,5 +18,12 @@ int main(int argc , char **argv) {
            
         }
  }
+  // Clear the remaining elements in the queue
+    while (!q.isEmpty()) {
+        int x = q.dequeue();
+        if (x != -1) {
+            std::cout << "dequeuing " << x << std::endl;
+        }
+    }
   return 0;
 }
