@@ -13,7 +13,9 @@ int main(int argc, char** argv) {
         if (strcmp(argv[i], "x") == 0) {
             x = q.dequeue();
             if (x != -1) {
-                cout << "Dequeuing " << x << endl;
+                cout << "dequeuing " << x << endl;
+            } else {
+                cout << "Empty queue" << endl; // Print message for empty queue
             }
         } else {
             q.enqueue(atoi(argv[i]));
@@ -24,10 +26,11 @@ int main(int argc, char** argv) {
     while (!q.isEmpty()) {
         int x = q.dequeue();
         if (x != -1) {
-            cout << "Dequeuing " << x << endl;
+            cout << "dequeuing " << x << endl;
+        } else {
+            cout << "Empty queue" << endl; // Print message for empty queue
         }
     }
 
     return 0;
 }
-
